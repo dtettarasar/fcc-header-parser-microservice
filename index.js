@@ -1,6 +1,8 @@
 // index.js
 // where your node app starts
 
+// https://www.supermonitoring.com/blog/check-browser-http-headers/
+
 // init project
 require('dotenv').config();
 var express = require('express');
@@ -22,6 +24,19 @@ app.get('/', function (req, res) {
 // your first API endpoint...
 app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
+});
+
+app.get('/api/whoami', (req, res) => {
+
+  const headerObj = {
+    ipaddress: req.socket.remoteAddress,
+    language: req.headers['accept-language'],
+    software: req.headers['user-agent']
+  }
+
+  console.log(headerObj);
+  
+  res.json(headerObj);
 });
 
 // listen for requests :)
